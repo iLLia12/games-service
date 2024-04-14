@@ -7,7 +7,7 @@ import { PrismaService } from '../prisma.service';
 export class GamesService {
   constructor(private prisma: PrismaService) {}
 
-  async user(
+  async game(
     userWhereUniqueInput: Prisma.gamesWhereUniqueInput,
   ): Promise<Game | null> {
     return this.prisma.games.findUnique({
@@ -15,7 +15,7 @@ export class GamesService {
     });
   }
 
-  async users(params: {
+  async games(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.gamesWhereUniqueInput;
