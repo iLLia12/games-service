@@ -38,7 +38,7 @@ input Params {
 type Mutation {
   store(createBody: StoreRequest!): Game!
   update(updateData: UpdateRequest!, id: Float!): Game!
-  destroy(id: Float!): Game!
+  destroy(id: ID!): Game!
 }
 
 input StoreRequest {

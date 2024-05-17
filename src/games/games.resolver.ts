@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Game } from './game.model';
 import { GamesService } from './games.service';
 import { Prisma } from '@prisma/client';
@@ -42,7 +42,7 @@ export class GamesResolver {
   }
 
   @Mutation(() => Game)
-  async destroy(@Args({ name: 'id' }) id: number) {
-    await this.gamesService.destroy({ id });
+  async destroy(@Args({ name: 'id', type: () => ID }) id: string) {
+    return await this.gamesService.destroy({ id: +id });
   }
 }
