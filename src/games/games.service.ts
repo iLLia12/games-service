@@ -1,47 +1,53 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { Game } from './game.model';
 import { PrismaService } from '../prisma.service';
+import { StoreRequest } from './dto/store.dto';
+import { Game } from './game.model';
+import { Params } from './dto/params.dto';
 
 @Injectable()
 export class GamesService {
   constructor(private prisma: PrismaService) {}
 
-  async game(
-    userWhereUniqueInput: Prisma.gamesWhereUniqueInput,
-  ): Promise<Game | null> {
+  async show(userWhereUniqueInput: Prisma.gamesWhereUniqueInput) {
     return this.prisma.games.findUnique({
       where: userWhereUniqueInput,
     });
   }
 
-  async games(params: {
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.gamesWhereUniqueInput;
-    where?: Prisma.gamesWhereInput;
-    orderBy?: Prisma.gamesOrderByWithRelationInput;
-  }): Promise<Game[]> {
-    const { skip, take, cursor, where, orderBy } = params;
-    return this.prisma.games.findMany({
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
-    });
+  async index(params: Params) {
+    const { page, perPage: take } = params;
+    const count = await this.prisma.games.count();
+    const countPages = Math.ceil(count / take);
+    const skip = (page - 1) * take;
+    return {
+      list: this.prisma.games.findMany({
+        skip,
+        take,
+        //cursor,
+        // where,
+        // orderBy,
+      }),
+      pagination: {
+        count,
+        page,
+        perPage: take,
+        countPages,
+      },
+    };
   }
 
-  async createUser(data: Prisma.gamesCreateInput): Promise<Game> {
+  async create(data: StoreRequest): Promise<Game | string> {
+    console.log('data: ', data);
     return this.prisma.games.create({
       data,
     });
   }
 
-  async updateUser(params: {
+  async update(params: {
     where: Prisma.gamesWhereUniqueInput;
     data: Prisma.gamesUpdateInput;
-  }): Promise<Game> {
+  }) {
     const { where, data } = params;
     return this.prisma.games.update({
       data,
@@ -49,7 +55,7 @@ export class GamesService {
     });
   }
 
-  async deleteUser(where: Prisma.gamesWhereUniqueInput): Promise<Game> {
+  async destroy(where: Prisma.gamesWhereUniqueInput) {
     return this.prisma.games.delete({
       where,
     });

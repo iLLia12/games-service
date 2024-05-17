@@ -1,0 +1,56 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""game"""
+type Game {
+  id: ID!
+  name: String!
+  slug: String!
+  year: Float!
+  description: String!
+}
+
+"""pagination"""
+type Pagination {
+  count: Float!
+  page: Float!
+  perPage: Float!
+  countPages: Float!
+}
+
+"""index"""
+type AllResponseDto {
+  list: [Game!]!
+  pagination: Pagination!
+}
+
+type Query {
+  show(id: Int!): Game!
+  all(params: Params!): AllResponseDto!
+}
+
+input Params {
+  page: Int = 1
+  perPage: Int = 10
+}
+
+type Mutation {
+  store(createBody: StoreRequest!): Game!
+  update(updateData: UpdateRequest!, id: Float!): Game!
+  destroy(id: Float!): Game!
+}
+
+input StoreRequest {
+  name: String!
+  slug: String!
+  year: Float!
+  description: String!
+}
+
+input UpdateRequest {
+  name: String!
+  slug: String!
+  year: Float!
+  description: String!
+}

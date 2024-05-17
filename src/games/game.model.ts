@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Length } from 'class-validator';
-@ObjectType({ description: 'games' })
+@ObjectType({ description: 'game' })
 export class Game {
   @Field(() => ID)
   id: number;
@@ -10,10 +10,8 @@ export class Game {
   @Field()
   slug: string;
   @Field()
+  year: number;
+  @Field()
   @Length(5000)
   description: string;
-  @Field()
-  createdAt: Date;
-  @Field({ nullable: true })
-  updatedAt: Date;
 }
