@@ -12,10 +12,8 @@ export class GamesResolver {
   constructor(private gamesService: GamesService) {}
 
   @Query(() => Game)
-  async show(
-    @Args('id', { type: () => Int }) id: Prisma.gamesWhereUniqueInput,
-  ) {
-    return this.gamesService.show(id);
+  async show(@Args({ name: 'id', type: () => Int }) id: number) {
+    return this.gamesService.show({ id });
   }
 
   @Query(() => AllResponseDto)
