@@ -6,4 +6,8 @@ export class Params {
   page?: number = 1;
   @Field(() => Int, { nullable: true })
   perPage?: number = 10;
+  @Field(() => String, { nullable: true })
+  orderBy?: string = 'id';
+  @Field(() => String, { nullable: true })
+  order?: string = 'asc';
 }

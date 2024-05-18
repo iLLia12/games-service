@@ -16,7 +16,7 @@ export class GamesService {
   }
 
   async index(params: Params) {
-    const { page, perPage: take } = params;
+    const { page, perPage: take, orderBy, order } = params;
     const count = await this.prisma.games.count();
     const countPages = Math.ceil(count / take);
     const skip = (page - 1) * take;
@@ -26,7 +26,9 @@ export class GamesService {
         take,
         //cursor,
         // where,
-        // orderBy,
+        orderBy: {
+          [orderBy]: order,
+        },
       }),
       pagination: {
         count,
@@ -38,7 +40,6 @@ export class GamesService {
   }
 
   async create(data: StoreRequest): Promise<Game | string> {
-    console.log('data: ', data);
     return this.prisma.games.create({
       data,
     });
