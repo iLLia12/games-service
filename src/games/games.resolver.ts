@@ -13,7 +13,8 @@ export class GamesResolver {
 
   @Query(() => Game)
   async show(@Args({ name: 'id', type: () => Int }) id: number) {
-    return this.gamesService.show({ id });
+    const item = await this.gamesService.show({ id });
+    return item;
   }
 
   @Query(() => AllResponseDto)
@@ -31,12 +32,10 @@ export class GamesResolver {
 
   @Mutation(() => Game)
   async update(
-    @Args({ name: 'updateData', type: () => UpdateRequest })
-    data: Prisma.gamesUpdateInput,
-    @Args({ name: 'id', type: () => Number })
-    id: number,
+    @Args({ name: 'updateBody', type: () => UpdateRequest })
+    data: UpdateRequest,
   ) {
-    return this.gamesService.update({ where: { id }, data });
+    return this.gamesService.update({ where: { id: data.id }, data });
   }
 
   @Mutation(() => Game)

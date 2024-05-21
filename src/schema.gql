@@ -39,7 +39,7 @@ input Params {
 
 type Mutation {
   store(createBody: StoreRequest!): Game!
-  update(updateData: UpdateRequest!, id: Float!): Game!
+  update(updateBody: UpdateRequest!): Game!
   destroy(id: ID!): Game!
 }
 
@@ -51,6 +51,7 @@ input StoreRequest {
 }
 
 input UpdateRequest {
+  id: Float!
   name: String!
   slug: String!
   year: Float!

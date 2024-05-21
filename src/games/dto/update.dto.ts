@@ -4,6 +4,8 @@ import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
 @ObjectType({ description: 'UpdateRequest' })
 export class UpdateRequest {
   @Field()
+  id: number;
+  @Field()
   name: string;
   @Field()
   slug: string;
