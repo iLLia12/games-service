@@ -6,6 +6,7 @@ import { GamesService } from './games/games.service';
 import { PrismaService } from './prisma.service';
 import { GamesModule } from './games/games.module';
 import { join } from 'path';
+import { FiltersModule } from './filters/filters.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { join } from 'path';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     GamesModule,
+    FiltersModule,
   ],
   providers: [GamesResolver, GamesService, PrismaService],
 })
